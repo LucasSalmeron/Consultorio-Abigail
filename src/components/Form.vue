@@ -23,7 +23,7 @@ function submit (){
         </div>
     </form>
 
-    <Button label="submit" v-on:click="submit">Submit</Button>
+    <Button label="submit" v-on:click="submit">GUARDAR</Button>
 </template>
 
 

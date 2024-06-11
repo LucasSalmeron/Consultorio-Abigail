@@ -14,6 +14,7 @@ const paciente = {
 const addPaciente = async(paciente) =>{
   console.log("submitting");
   console.log(paciente);
+  pacienteStore.addPaciente(paciente);
 }
 
 
@@ -22,10 +23,6 @@ function submit (){
 }
 
 </script>
-
-
-
-
 
 <template>
 <Form :objeto="paciente" :retorno="submit">  </Form>

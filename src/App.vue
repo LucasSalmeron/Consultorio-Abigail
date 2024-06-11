@@ -9,7 +9,7 @@ import Formulario from './components/Formulario.vue';
   
     
   <!-- <Grilla/> --> 
-  <Formulario></Formulario>
+  <GrillaPacientes></GrillaPacientes>
 
   </div>
   

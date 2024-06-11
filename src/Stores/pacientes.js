@@ -32,7 +32,7 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
 
     const addPaciente= async (paciente) => {
         try{
-            const data = await axios.post(`http://localhost:3000/sumarPaciente`, {...paciente});
+            const data = await axios.post(`http://localhost:3000/sumarPaciente/`+paciente.Dni+`/`+paciente.Nombre+`/`+paciente.Telefono+`/`+paciente.Email+`/`+paciente.Direccion);
             if(data){
                 fetchPacientes();
                 return true;
