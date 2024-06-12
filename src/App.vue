@@ -1,16 +1,26 @@
 <script setup>
-import GrillaPacientes from './components/GrillaPacientes.vue';
-import Formulario from './components/Formulario.vue';
+import GrillaPacientes from './components/Grillas/GrillaPacientes.vue';
+import Formulario from './components/Formularios/Formulario.vue';
+import { usePacienteStore } from './Stores/pacientes';
+
+const pacienteStore = usePacienteStore();
+
 </script>
 
 
 <template>
-  <div>
+  <div v-if="pacienteStore.isLoading">
   
-    
-  <!-- <Grilla/> --> 
-  <GrillaPacientes></GrillaPacientes>
+    Cargando...
+  
+  
+  </div>
 
+  <div v-else>
+    <GrillaPacientes></GrillaPacientes>
+  
+   <Formulario :objeto = "{p: pacienteStore.pacientes[5]}"></Formulario>
+   <Formulario></Formulario>
   </div>
   
   
