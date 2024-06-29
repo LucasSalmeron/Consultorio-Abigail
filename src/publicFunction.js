@@ -9,3 +9,9 @@
 export function ponerEspacios(texto){
     return texto
 } //ERA INNECESARIO
+
+export let Estado = 0;
+
+export function cambiarEstado(nuevoEstado){
+    Estado = nuevoEstado;
+}
