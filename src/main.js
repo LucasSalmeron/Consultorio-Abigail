@@ -9,11 +9,13 @@ import {createWebHistory,createRouter} from 'vue-router'
 import Pacientes from './Views/Pacientes.vue'
 import Tratamientos from './Views/Tratamientos.vue'
 import Pagos from './Views/Pagos.vue'
+import Formulario from './components/Formularios/Formulario.vue'
+import "primeicons/primeicons.css";
 const routes  =[
     {path: '/', component: Pacientes},
+    {path: '/EditarPaciente', name:'EditarPaciente', props:true,component: Formulario, params:{Object}},
     {path:'/Tratamientos', component: Tratamientos},
     {path:'/Pagos', component: Pagos}
-
 ]
 const router = createRouter({
     history: createWebHistory(),

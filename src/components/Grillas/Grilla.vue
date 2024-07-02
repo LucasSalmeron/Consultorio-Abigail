@@ -4,12 +4,27 @@ import Column from 'primevue/column';
 import Row from 'primevue/row';
 import {ref} from 'vue';
 import InputText from 'primevue/inputtext';
-defineProps({
+import Button from 'primevue/button';
+import { useRouter } from 'vue-router'
+import { simplePassing } from '../../Stores/simplePassing';
+const sp = simplePassing();
+const router = useRouter();
+const p = defineProps({
     objetos: Object
 })
 const selected = ref();
 
 const filters = ref({global: {value: null, matchMode: 'contains'}});
+
+const editar = (item) =>{
+    if(sp.parametros.sender==0){
+
+        sp.parametros.objeto = selected.value;
+        router.push({
+            name: 'EditarPaciente',
+        });
+    }
+}
 </script>
 
 
@@ -26,7 +41,19 @@ const filters = ref({global: {value: null, matchMode: 'contains'}});
             <template #header>
                 <InputText v-model="filters['global'].value" placeholder="Buscar" />
             </template>
-                 <Column class = "column" v-for="field in Object.keys($props.objetos[0])" :key="field" :field="field" :header="field" sortable ></Column>
+                <Column class = "column" v-for="field in Object.keys($props.objetos[0])" :key="field" :field="field" :header="field" sortable ><button type="button" class="btn">X</button></Column>
+                <Column headerStyle="width: 5rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+                    <template #body>
+                        <Button type="button" icon="pi pi-pencil" rounded v-on:click="(_,item) => editar(item)"/>
+                    </template>
+                            
+                </Column>
+                <Column headerStyle="width: 5rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+                    <template #body>
+                        <Button type="button" icon="pi pi-trash" rounded />
+                    </template>
+                            
+                </Column>
           </DataTable>
 </template>
 
@@ -34,10 +61,21 @@ const filters = ref({global: {value: null, matchMode: 'contains'}});
 <style>
 .column{
     color: black;
-    min-width: 240px;
+    min-width: 200px;
 }
 
+.btn{
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 
+}
 
 
 

@@ -13,10 +13,5 @@ import GrillaPacientes from '../components/Grillas/GrillaPacientes.vue'
 </template>
 
 <style>
-.grilla{
 
-}
-.title{
-    
-}
 </style>
