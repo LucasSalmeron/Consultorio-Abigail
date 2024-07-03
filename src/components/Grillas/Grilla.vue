@@ -6,8 +6,8 @@ import {ref} from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { useRouter } from 'vue-router'
-import { simplePassing } from '../../Stores/simplePassing';
-const sp = simplePassing();
+import { usePacienteStore } from '../../Stores/pacientes';
+const pacienteStore = usePacienteStore();
 const router = useRouter();
 const p = defineProps({
     objetos: Object
@@ -17,13 +17,11 @@ const selected = ref();
 const filters = ref({global: {value: null, matchMode: 'contains'}});
 
 const editar = (item) =>{
-    if(sp.parametros.sender==0){
-
-        sp.parametros.objeto = selected.value;
-        router.push({
-            name: 'EditarPaciente',
-        });
-    }
+    pacienteStore.selectedPaciente = selected;
+    router.push({
+        path: '/EditarPaciente'
+     });
+    
 }
 </script>
 

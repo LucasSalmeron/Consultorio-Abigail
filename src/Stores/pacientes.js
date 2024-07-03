@@ -45,7 +45,6 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     const addPaciente= async (paciente) => {
@@ -121,5 +120,13 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
 
     const selectedPaciente = computed(() => _selectedPaciente.value);
 
-    return { fetchPacientes,addPaciente,editPaciente,deletePaciente, searchPacienteDni, pacientes, isLoading, selectedPaciente }
+    const checkNewDni = (dni) => {
+        return !_pacientes.value.some((paciente) => paciente.Dni === dni);
+    }
+
+    const selectPaciente = (item) =>{
+        _selectedPaciente.value = item
+    }
+
+    return { fetchPacientes,addPaciente,editPaciente,deletePaciente, searchPacienteDni, pacientes, isLoading, selectedPaciente, checkNewDni, selectPaciente}
   })
