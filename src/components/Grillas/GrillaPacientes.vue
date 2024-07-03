@@ -11,7 +11,7 @@ import Dialog from 'primevue/dialog';
 import ConfirmDialog from 'primevue/confirmdialog';
 
 
-//TODO CAMBIAR DE SELECTEDPACIENTE DE VUELTA A SELECTED PARA QUE NO SE MODIFIQUE DE FORMA INCORRECTA
+//TODO VER SI PODEMOS VOLVER A TENER DIVIDIDOS FORM DE GRILLA??? DEFINIR
 
 const pacienteStore = usePacienteStore();
 const v = ref(false);
