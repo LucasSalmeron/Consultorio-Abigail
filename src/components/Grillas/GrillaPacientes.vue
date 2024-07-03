@@ -17,7 +17,6 @@ const pacienteStore = usePacienteStore();
 const v = ref(false);
 
 const filters = ref({global: {value: null, matchMode: 'contains'}});
-const paciente0 = {Dni: '', Nombre: '', Telefono: '', Email: '', Direccion: ''};
 
 let paciente = {Dni: '', Nombre: '', Telefono: '', Email: '', Direccion: ''};
 let titulo = ref('Añadir Paciente');
@@ -25,7 +24,11 @@ let isNew = ref(false);
 
 
 const añadir = () => {
-       paciente = paciente0;
+       paciente.Dni = '';
+       paciente.Nombre = '';
+       paciente.Telefono = '';
+       paciente.Email = '';
+       paciente.Direccion = '';
        titulo = 'Añadir Paciente';
        isNew = true;
     v.value = true;
@@ -44,6 +47,7 @@ const editar = (item) => {
 const eliminar = (item) => {
        paciente = item;
     deleteIt();
+    
 }
 
 const confirm = useConfirm();
@@ -67,7 +71,6 @@ function submit() {
         alert("Todos los campos son obligatorios.");
         return;
     }
-    console.log(pacienteStore.selectedPaciente)
     if (isNew) { 
         if (isNewDni()) {
             pacienteStore.addPaciente(paciente);
@@ -83,7 +86,7 @@ function submit() {
 }
 
 function isNewDni() {
-    return pacienteStore.checkNewDni(pacienteStore.selectedPaciente.Dni);
+    return pacienteStore.checkNewDni(paciente.Dni);
 }
 
 function isValid() {
@@ -109,7 +112,6 @@ function isValid() {
 
 
 <template>
-    <h1>{{ v }}</h1>
     <h1 v-if="pacienteStore.pacientes==null">Cargando...</h1>
 <div v-else>
        <div class="card">
@@ -118,12 +120,11 @@ function isValid() {
                             <Button label ="Nuevo" severity="success" icon="pi pi-plus" class ="mr-2" v-on:click="añadir()"/>
                      </template>
                      <template #end>
-                            <InputText v-model="filters['global'].value" placeholder="Buscar..." />
+                            <InputText id= "filtro" v-model="filters['global'].value" placeholder="Buscar..." />
                      </template>
               </Toolbar>
        </div>
        <DataTable ref ="dt" :value="pacienteStore.pacientes"
-       dataKey = "Dni"
        :paginator = "true"
        :rows = "10"
        :filters = "filters"
@@ -149,8 +150,8 @@ function isValid() {
               <form class="form">
                      <h1 class="titleModal">{{ titulo }}</h1>
                      <div class="form-group">
-                            <label class="form-label" for="dni">Dni</label>
-                            <input v-model="paciente.Dni" class="form-input" type="text" id="dni" placeholder="Dni"/>
+                            <label class="form-label" for="dni" >Dni</label>
+                            <input v-model="paciente.Dni" class="form-input" type="text" id="dni" placeholder="Dni" :disabled="!isNew"/>
                      </div>
                      <div class="form-group">
                             <label class="form-label" for="nombre">Nombre</label>
@@ -212,6 +213,8 @@ function isValid() {
   width: 250px;
   font-size: larger;
 }
+
+
 .form-button{
   margin-top: 20px;
   padding: 15px 30px;

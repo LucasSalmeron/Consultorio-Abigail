@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import axios from 'axios'
-
 export const usePacienteStore = defineStore('pacientes', () =>  {
-    const _pacientes = ref([{
+    let _pacientes = ref([{
         Dni: null,
         Nombre: null,
         Telefono: null,
@@ -11,7 +10,7 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
         Direccion: null,
       }])
     const _isLoading = ref(false);
-
+    const helpDoubleEdit = ref(true);
     const _selectedPaciente = ref("");
 
     const fetchPacientes = async ()=> {
@@ -62,6 +61,7 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
             const d = axios.post(`http://localhost:3000/sumarPaciente/`,data);
             if(d){
                 fetchPacientes();
+                fetchPacientes();
                 return true;
             }
         } catch (error) {
@@ -83,6 +83,7 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
             const d = axios.post(`http://localhost:3000/editarPaciente/`,data);
             if(d){
                 fetchPacientes();
+                fetchPacientes();
                 return true;
             }
         } catch (error) {
@@ -101,6 +102,7 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
            const d = axios.post(`http://localhost:3000/eliminarPaciente/`,data);
            if(d){
                fetchPacientes();
+               fetchPacientes();
                return true;
            }
        } catch (error) {
@@ -108,6 +110,9 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
        }
 
     }
+
+  
+
 
     fetchPacientes();
     
