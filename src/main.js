@@ -7,13 +7,13 @@ import PrimeVue from 'primevue/config'
 export const pinia= createPinia();
 import {createWebHistory,createRouter} from 'vue-router'
 import ConfirmationService from 'primevue/confirmationservice';
-import Pacientes from './Views/Pacientes.vue'
+import GrillaPacientes from './components/Grillas/GrillaPacientes.vue'
 import Tratamientos from './Views/Tratamientos.vue'
 import Pagos from './Views/Pagos.vue'
 import "primeicons/primeicons.css";
 
 const routes  =[
-    {path: '/', component: Pacientes},
+    {path: '/', component: GrillaPacientes},
     {path:'/Tratamientos', component: Tratamientos},
     {path:'/Pagos', component: Pagos}
 ]
