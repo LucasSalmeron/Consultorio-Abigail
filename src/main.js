@@ -10,12 +10,10 @@ import ConfirmationService from 'primevue/confirmationservice';
 import Pacientes from './Views/Pacientes.vue'
 import Tratamientos from './Views/Tratamientos.vue'
 import Pagos from './Views/Pagos.vue'
-import FormPacientes from './components/Formularios/FormPacientes.vue'
 import "primeicons/primeicons.css";
 
 const routes  =[
     {path: '/', component: Pacientes},
-    {path: '/EditarPaciente', component: FormPacientes},
     {path:'/Tratamientos', component: Tratamientos},
     {path:'/Pagos', component: Pagos}
 ]

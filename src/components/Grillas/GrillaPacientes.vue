@@ -18,26 +18,31 @@ const v = ref(false);
 
 const filters = ref({global: {value: null, matchMode: 'contains'}});
 const paciente0 = {Dni: '', Nombre: '', Telefono: '', Email: '', Direccion: ''};
+
+let paciente = {Dni: '', Nombre: '', Telefono: '', Email: '', Direccion: ''};
 let titulo = ref('Añadir Paciente');
 let isNew = ref(false);
 
 
 const añadir = () => {
-       pacienteStore.selectPaciente(paciente0);
+       paciente = paciente0;
        titulo = 'Añadir Paciente';
        isNew = true;
     v.value = true;
 }
 const editar = (item) => {
-    pacienteStore.selectPaciente(item);
+    paciente.Dni = item.Dni;
+    paciente.Nombre = item.Nombre;
+    paciente.Telefono = item.Telefono;
+    paciente.Email = item.Email;
+    paciente.Direccion = item.Direccion;
     isNew = false;
     titulo = 'Editar Paciente';
     v.value = true;
-    console.log(pacienteStore.selectedPaciente);
 }
 
 const eliminar = (item) => {
-       pacienteStore.selectPaciente(item);
+       paciente = item;
     deleteIt();
 }
 
@@ -49,7 +54,7 @@ confirm.require({
   acceptClass: 'p-button-danger',
   acceptLabel: 'Si',
   accept: () => {
-    pacienteStore.deletePaciente(pacienteStore.selectedPaciente.Dni);
+    pacienteStore.deletePaciente(paciente.Dni);
   }
 })
 }
@@ -64,18 +69,15 @@ function submit() {
     }
     console.log(pacienteStore.selectedPaciente)
     if (isNew) { 
-       console.log("pasa por 1");
         if (isNewDni()) {
-            pacienteStore.addPaciente(pacienteStore.selectedPaciente);
-            console.log("pasa por 2");
+            pacienteStore.addPaciente(paciente);
             v.value = false;
         } else {
             alert("El DNI ya existe en la base de datos.");
             return;
         }
     } else {
-       console.log("pasa por 3");
-        pacienteStore.editPaciente(pacienteStore.selectedPaciente);
+        pacienteStore.editPaciente(paciente);
         v.value = false;
     }
 }
@@ -86,25 +88,23 @@ function isNewDni() {
 
 function isValid() {
     let valid = true;
-    if (!pacienteStore.selectedPaciente.Dni) {
+    if (!paciente.Dni) {
         valid = false;
     }
-    if (!pacienteStore.selectedPaciente.Nombre) {
+    if (!paciente.Nombre) {
         valid = false;
     }
-    if (!pacienteStore.selectedPaciente.Telefono) {
+    if (!paciente.Telefono) {
         valid = false;
     }
-    if (!pacienteStore.selectedPaciente.Email) {
+    if (!paciente.Email) {
         valid = false;
     }
-    if (!pacienteStore.selectedPaciente.Direccion) {
+    if (!paciente.Direccion) {
         valid = false;
     }
     return valid;
 }
-
-
 </script>
 
 
@@ -150,23 +150,23 @@ function isValid() {
                      <h1 class="titleModal">{{ titulo }}</h1>
                      <div class="form-group">
                             <label class="form-label" for="dni">Dni</label>
-                            <input v-model="pacienteStore.selectedPaciente.Dni" class="form-input" type="text" id="dni" placeholder="Dni"/>
+                            <input v-model="paciente.Dni" class="form-input" type="text" id="dni" placeholder="Dni"/>
                      </div>
                      <div class="form-group">
                             <label class="form-label" for="nombre">Nombre</label>
-                            <input v-model="pacienteStore.selectedPaciente.Nombre" class="form-input" type="text" id="nombre" placeholder="Nombre"/>
+                            <input v-model="paciente.Nombre" class="form-input" type="text" id="nombre" placeholder="Nombre"/>
                      </div>
                      <div class="form-group">
                             <label class="form-label" for="telefono">Telefono</label>
-                            <input v-model="pacienteStore.selectedPaciente.Telefono" class="form-input" type="text" id="telefono" placeholder="Telefono"/>
+                            <input v-model="paciente.Telefono" class="form-input" type="text" id="telefono" placeholder="Telefono"/>
                      </div>
                      <div class="form-group">
                             <label class="form-label" for="email">Email</label>
-                            <input v-model="pacienteStore.selectedPaciente.Email" class="form-input" type="text" id="email" placeholder="Email"/>
+                            <input v-model="paciente.Email" class="form-input" type="text" id="email" placeholder="Email"/>
                      </div>
                      <div class="form-group">
                             <label class="form-label" for="direccion">Direccion</label>
-                            <input v-model="pacienteStore.selectedPaciente.Direccion" class="form-input" type="text" id="direccion" placeholder="Direccion"/>
+                            <input v-model="paciente.Direccion" class="form-input" type="text" id="direccion" placeholder="Direccion"/>
                      </div>
                      <Button label="submit" v-on:click="submit" class="form-button">GUARDAR</Button>
               </form>

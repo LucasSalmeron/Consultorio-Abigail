@@ -5,10 +5,8 @@ import {ref} from 'vue';
 import Dialog from 'primevue/dialog';
 import { onUpdated } from 'vue';
 import { computed } from 'vue';
-import {useUtils} from '../../Stores/utils.js';
 const pacienteStore = usePacienteStore();
 
-const utils = useUtils();
 const props = defineProps({
   v: Boolean
 })
