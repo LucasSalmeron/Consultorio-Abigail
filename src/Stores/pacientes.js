@@ -10,7 +10,6 @@ export const usePacienteStore = defineStore('pacientes', () =>  {
         Direccion: null,
       }])
     const _isLoading = ref(false);
-    const helpDoubleEdit = ref(true);
     const _selectedPaciente = ref("");
 
     const fetchPacientes = async ()=> {

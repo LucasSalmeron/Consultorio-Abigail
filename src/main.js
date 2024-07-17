@@ -8,13 +8,13 @@ export const pinia= createPinia();
 import {createWebHistory,createRouter} from 'vue-router'
 import ConfirmationService from 'primevue/confirmationservice';
 import GrillaPacientes from './components/Grillas/GrillaPacientes.vue'
-import Tratamientos from './Views/Tratamientos.vue'
+import GrillaTratamientos from './components/Grillas/GrillaTratamientos.vue'
 import Pagos from './Views/Pagos.vue'
 import "primeicons/primeicons.css";
 
 const routes  =[
     {path: '/', component: GrillaPacientes},
-    {path:'/Tratamientos', component: Tratamientos},
+    {path:'/Tratamientos', component: GrillaTratamientos},
     {path:'/Pagos', component: Pagos}
 ]
 const router = createRouter({

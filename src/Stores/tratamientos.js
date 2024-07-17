@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import axios from 'axios'
-
+import {usePacienteStore} from './pacientes';
 export const useTratamientoStore = defineStore('Tratamientos', () =>  {
     const _tratamientos = ref([{
-        Dni: null,
-        Nombre: null,
-        Telefono: null,
-        Email: null,
-        Direccion: null,
+        Id: null,
+        Fecha:null,
+        Presupuesto:null,
+        Nombre:null,
+        Descripcion:null,
+        Paciente:null
       }])
+    const pacienteStore = usePacienteStore();
     const _isLoading = ref(false);
-
     const _selectedTratamiento = ref("");
 
     const fetchTratamientos = async ()=> {
@@ -57,7 +58,7 @@ export const useTratamientoStore = defineStore('Tratamientos', () =>  {
           
            const {data: p} = axios.post(`http://localhost:3000/buscarTratamientosPorDni/`,data);
            if(p){
-               _selectedTratamiento.value = p;
+               _tratamientos.value = p;
                return p;
            }
        } catch (error) {
@@ -82,6 +83,7 @@ export const useTratamientoStore = defineStore('Tratamientos', () =>  {
             const d = axios.post(`http://localhost:3000/sumarTratamiento/`,data);
             if(d){
                 fetchTratamientos();
+                fetchTratamientos();
                 return true;
             }
         } catch (error) {
@@ -104,6 +106,7 @@ export const useTratamientoStore = defineStore('Tratamientos', () =>  {
             const d = axios.post(`http://localhost:3000/editarTratamiento/`,data);
             if(d){
                 fetchTratamientos();
+                
                 return true;
             }
         } catch (error) {
@@ -121,6 +124,7 @@ export const useTratamientoStore = defineStore('Tratamientos', () =>  {
           
            const d = axios.post(`http://localhost:3000/eliminarTratamiento/`,data);
            if(d){
+               fetchTratamientos();
                fetchTratamientos();
                return true;
            }
@@ -141,5 +145,17 @@ export const useTratamientoStore = defineStore('Tratamientos', () =>  {
 
     const selectedTratamiento = computed(() => _selectedTratamiento.value);
 
-    return { fetchTratamientos,addTratamiento,editTratamiento,deleteTratamiento, searchTratamientoId, tratamientos, isLoading, selectedTratamiento }
+    const checkNewId = (id) => {
+        return !_tratamientos.value.some((tratamiento) => tratamiento.Id === id);
+    }
+
+    const selectTratamiento = (item) =>{
+        _selectedTratamiento.value = item
+    }
+
+    const getNewId = () => {
+        return Math.max(..._tratamientos.value.map((tratamiento) => tratamiento.Id), 0) + 1;
+    }
+
+    return { fetchTratamientos,addTratamiento,editTratamiento,deleteTratamiento, searchTratamientoId, tratamientos, isLoading, selectedTratamiento, checkNewId, selectTratamiento, getNewId}
   })
